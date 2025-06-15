@@ -1,15 +1,45 @@
 #include "Movie.h"
-Movie::Movie(std::string title, double rating, unsigned length, unsigned room, Date releaseDate, Date screenDate, Time startTime, Time endTime) :
-	title(title), rating(rating), length(length), room(room), releaseDate(releaseDate), screenDate(screenDate), startTime(startTime), endTime(endTime) {}
+Movie::Movie(const MyString& title, unsigned length, unsigned room, Date releaseDate, Date screenDate, Time startTime, Time endTime) :
+	title(title), length(length), room(room), releaseDate(releaseDate), screenDate(screenDate), startTime(startTime), endTime(endTime) {}
 
-void Movie::setTitle(std::string title)
+void Movie::print() const
+{
+	std::cout << this->title << std::endl;
+	std::cout << this->screenDate.getDay() << "." << this->screenDate.getMonth()<<std::endl;
+	std::cout << this->startTime.getHour() << ":" << this->startTime.getMinute() << std::endl;
+}
+
+void Movie::addRating(double newRating) {
+	if (newRating < 1.0 || newRating > 5.0)
+		throw std::invalid_argument("Rating must be between 1 and 5");
+
+	totalRating += newRating;
+	++ratingCount;
+}
+
+bool Movie::hasPassed() const {
+	constexpr int TM_YEAR_OFFSET = 1900;   
+	constexpr int TM_MONTH_OFFSET = 1;    
+
+	std::tm movieTime = {};
+	movieTime.tm_year = static_cast<int>(screenDate.getYear()) - TM_YEAR_OFFSET;
+	movieTime.tm_mon = static_cast<int>(screenDate.getMonth()) - TM_MONTH_OFFSET;
+	movieTime.tm_mday = static_cast<int>(screenDate.getDay());
+	movieTime.tm_hour = static_cast<int>(endTime.getHour());
+	movieTime.tm_min = static_cast<int>(endTime.getMinute());
+	movieTime.tm_sec = 0;
+
+	std::time_t movieEndEpoch = std::mktime(&movieTime);
+	std::time_t now = std::time(nullptr);
+
+	return movieEndEpoch < now;
+}
+
+void Movie::setTitle(const MyString& title)
 {
 	this->title = title;
 }
-void Movie::setRating(double rating)
-{
-	this->rating = rating;
-}
+
 void Movie::setRoom(unsigned room)
 {
 	this->room = room;
@@ -35,13 +65,14 @@ void Movie::setLength(unsigned length)
 	this->length = length;
 }
 
-std::string Movie::getTitle() const
+
+MyString Movie::getTitle() const
 {
 	return this->title;
 }
 double Movie::getRating() const
 {
-	return this->rating;
+	return this->totalRating/ratingCount;
 }
 unsigned Movie::getRoom() const
 {

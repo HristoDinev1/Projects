@@ -128,7 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActionMovie.cpp" />
-    <ClCompile Include="Administrator.cpp" />
+    <ClCompile Include="AppManager.cpp" />
     <ClCompile Include="BitSet.cpp" />
     <ClCompile Include="Cinema.cpp" />
     <ClCompile Include="CinemaHall.cpp" />
@@ -138,14 +138,14 @@
     <ClCompile Include="DramaMovie.cpp" />
     <ClCompile Include="KinoSalon.cpp" />
     <ClCompile Include="Movie.cpp" />
+    <ClCompile Include="MovieFactory.cpp" />
     <ClCompile Include="MyString.cpp" />
-    <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionMovie.h" />
-    <ClInclude Include="Administrator.h" />
+    <ClInclude Include="AppManager.h" />
     <ClInclude Include="BitSet.h" />
     <ClInclude Include="Cinema.h" />
     <ClInclude Include="CinemaHall.h" />
@@ -154,10 +154,10 @@
     <ClInclude Include="DocumentaryMovie.h" />
     <ClInclude Include="DramaMovie.h" />
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="MovieFactory.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="MyVector.hpp" />
     <ClInclude Include="PolymorphicPtr.hpp" />
-    <ClInclude Include="Ticket.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>

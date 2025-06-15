@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include"MyVector.hpp"
 #include"PolymorphicPtr.hpp"
 #include"Movie.h"
 #include"BitSet.h"
@@ -13,7 +13,10 @@ public:
     void takeSeat(unsigned row, unsigned col);
     void freeSeat(unsigned row, unsigned col);
 
+    void serialize(std::ofstream& out) const;
+    void deserialize(std::ifstream& in);
+
 private:
-    std::vector<BitSet> seats;
+    MyVector<BitSet> seats;
     unsigned rows, cols;
 };

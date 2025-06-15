@@ -1,18 +1,18 @@
 #pragma once
-#include <vector>
-#include <string>
+#include "MyString.h"
 #include "Date.h"
 #include "Time.h"
 #include <iostream>
+#include <fstream>
+#include <ctime> // to get current date and time to check if the movie has passed 
 
 class Movie
 {
 public:
     Movie() = default;
-    Movie(std::string title, double rating, unsigned length, unsigned room, Date releaseDate, Date screenDate, Time startTime, Time endTime);
+    Movie(const MyString& title, unsigned length, unsigned room, Date releaseDate, Date screenDate, Time startTime, Time endTime);
 
-    void setTitle(std::string title);
-    void setRating(double rating);
+    void setTitle(const MyString& title);
     void setRoom(unsigned room);
     void setReleaseDate(Date releaseDate);
     void setScreenDate(Date screenDate);
@@ -20,7 +20,7 @@ public:
     void setEndTime(Time endTime);
     void setLength(unsigned length);
 
-    std::string getTitle() const;
+    MyString getTitle() const;
     double getRating() const;
     unsigned getRoom() const;
     Date getScreenDate() const;
@@ -28,6 +28,15 @@ public:
     Time getEndTime() const;
     Time getStartTime() const;
     unsigned getLength() const;
+
+    void print() const;
+    bool hasPassed() const;
+    void addRating(double newRating);
+
+    virtual void serialize(std::ofstream& out) const = 0;
+    virtual void deserialize(std::ifstream& in) = 0;
+
+    virtual Movie* clone() const = 0;
 
     virtual double calculatePrice() const = 0;
     virtual ~Movie() = default;
@@ -42,8 +51,9 @@ protected:
 
     Genre getGenre() const;
 private:
-    std::string title;
-    double rating;
+    MyString title;
+    int ratingCount;
+    double totalRating;
     unsigned length;
     unsigned room;
     Date releaseDate;

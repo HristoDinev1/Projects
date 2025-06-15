@@ -1,25 +1,26 @@
 #pragma once
-#include <string>
-#include <vector>
-#include "Ticket.h"
+#include "MyVector.hpp"
 #include "PolymorphicPtr.hpp"
 #include "Movie.h"
+#include "MyString.h"
 
 class User
 {
 public:
-    User(std::string name, std::string password);
+    User(const MyString& name, const MyString& password);
 
-    bool validateLoginData(std::string name, std::string password);
-    void buyTicket(Ticket* ticket);
+    bool validateLoginData(const MyString& name, const MyString& password);
+    void buyTicket(const Movie& movie);
+    void rate(double rating, Movie& movie); //mechanism to see if its in the movies
+
     void printWatchedMovies() const;
-    // rate a movie ?
+    void printTickets() const;
 
+    MyString getName() const;
 private:
-    std::string name;
-    std::string password;
+    MyString name;
+    MyString password;
     double balance;
-    std::vector<PolymorphicPtr<Ticket>> tickets;
-    std::vector<PolymorphicPtr<Movie>> watchedMovies;
+    MyVector<const Movie*> tickets;
 
 };
